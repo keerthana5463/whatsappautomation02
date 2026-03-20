@@ -1,0 +1,23 @@
+{
+  "name": "whatsapp-automation-typebot",
+  "version": "1.0.0",
+  "description": "WhatsApp Cloud API + Typebot Integration (Free, No QR Code)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "keywords": [
+    "whatsapp",
+    "cloud-api",
+    "typebot",
+    "chatbot"
+  ],
+  "license": "MIT",
+  "author": "Antigravity AI (ML Engineer)"
+}

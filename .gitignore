@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Environment variables (NEVER push secrets!)
+.env
+
+# Ngrok binary
+ngrok.exe
+ngrok
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test files
+test-*.js

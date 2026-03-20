@@ -1,0 +1,56 @@
+# 🤖 Self-Hosted Typebot Infrastructure (Optional)
+# This allows you to run a local instance of Typebot using Docker for development and local testing.
+# For production, it is recommended to use Typebot.io (Cloud) directly.
+
+services:
+  typebot-db:
+    image: postgres:16-alpine
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=typebot
+      - POSTGRES_PASSWORD=typebot
+      - POSTGRES_USER=typebot
+
+  typebot-builder:
+    image: baptistearno/typebot-builder:latest
+    restart: always
+    ports:
+      - "8080:3000"
+    depends_on:
+      - typebot-db
+    environment:
+      - DATABASE_URL=postgresql://typebot:typebot@typebot-db:5432/typebot
+      - NEXTAUTH_URL=http://localhost:8080
+      - NEXT_PUBLIC_VIEWER_URL=http://localhost:8081
+      - ENCRYPTION_SECRET=12345678901234567890123456789012
+      - ADMIN_EMAIL=admin@example.com
+      - SMTP_HOST=mailhog
+      - SMTP_PORT=1025
+      - SMTP_SECURE=false
+      - SMTP_FROM=no-reply@typebot.io
+      - NEXT_PUBLIC_SMTP_FROM=no-reply@typebot.io
+      - SMTP_USERNAME=typebot
+      - SMTP_PASSWORD=typebot
+
+  typebot-viewer:
+    image: baptistearno/typebot-viewer:latest
+    restart: always
+    ports:
+      - "8081:3000"
+    environment:
+      - DATABASE_URL=postgresql://typebot:typebot@typebot-db:5432/typebot
+      - NEXT_PUBLIC_VIEWER_URL=http://localhost:8081
+      - NEXTAUTH_URL=http://localhost:8080
+      - ENCRYPTION_SECRET=12345678901234567890123456789012
+
+  mailhog:
+    image: mailhog/mailhog
+    restart: always
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+
+volumes:
+  db-data:
