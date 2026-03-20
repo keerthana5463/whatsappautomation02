@@ -1,14 +1,14 @@
 const path = require('path');
 const dotenv = require('dotenv');
 
-// Load .env from current directory
+// Load .env from current directory (optional - Render uses dashboard env vars)
 const envPath = path.join(__dirname, '.env');
 const result = dotenv.config({ path: envPath });
 
 console.log('--- ENV LOADING DEBUG ---');
 console.log('Environment file path:', envPath);
 if (result.error) {
-    console.error('❌ Dotenv failed to load:', result.error);
+    console.log('ℹ️ No .env file found - using system environment variables (normal on Render/production)');
 } else {
     console.log('✅ Dotenv loaded successfully');
     console.log('Parsed keys:', Object.keys(result.parsed || {}));
